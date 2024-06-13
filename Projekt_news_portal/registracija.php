@@ -35,29 +35,88 @@
     <form action="" method="post" id="registrationForm">
         <label for="ime">Unesite vaše ime:</label>
         <br>
-        <input type="text" name="ime" required>
+        <input type="text" name="ime" id="ime">
+        <span id="ime_poruka"></span>
         <br>
         <label for="prezime">Unesite vaše prezime:</label>
         <br>
-        <input type="text" name="prezime" required>
+        <input type="text" name="prezime" id="prezime">
+        <span id="prezime_poruka"></span>
         <br>
         <label for="korisnicko_ime">Unesite korisničko ime:</label>
         <br>
+        <input type="text" name="korisnicko_ime" id="korisnicko_ime">
         <span id="korisnicko_ime_poruka"></span>
         <br>
-        <input type="text" name="korisnicko_ime" required>
+        <label for="lozinka1">Unesite lozinku:</label>
         <br>
-        <label for="lozinka">Unesite lozinku:</label>
+        <input type="password" name="lozinka1" id="lozinka1">
+        <span id="lozinka1_poruka"></span>
         <br>
-        <input type="password" name="lozinka" required>
+        <label for="lozinka2">Unesite lozinku:</label>
+        <br>
+        <input type="password" name="lozinka2" id="lozinka2">
+        <span id="lozinka2_poruka"></span>
         <br>
         <br>
       <div class="btn-container">
-        <input type="submit" value="Registracija">
+        <input type="submit" value="Registracija" id="registracija">
       </div>
     </form>
   </div>
+  <script type="text/javascript">
+  document.getElementById("registracija").onclick = function(event){
+    var slanje_forme = true;
+    var ime = document.getElementById("ime").value;
+    var polje_ime = document.getElementById("ime");
+    if(ime.length == 0){
+      slanje_forme = false;
+      document.getElementById("ime_poruka").innerHTML = "Ime je obavezno";
+      document.getElementById("ime_poruka").style.color="red";
+      polje_ime.style.border = "2px groove red";
+    }
 
+    var prezime = document.getElementById("prezime").value;
+    var polje_prezime = document.getElementById("prezime");
+    if(prezime.length == 0){
+      slanje_forme = false;
+      document.getElementById("prezime_poruka").innerHTML = "Prezime je obavezno";
+      document.getElementById("prezime_poruka").style.color="red";
+      polje_prezime.style.border = "2px groove red";
+    }
+
+    var korisnicko_ime = document.getElementById("korisnicko_ime").value;
+    var polje_korisnicko_ime = document.getElementById("korisnicko_ime");
+    if(korisnicko_ime.length == 0){
+      slanje_forme = false;
+      document.getElementById("korisnicko_ime_poruka").innerHTML = "Korisničko ime je obavezno";
+      document.getElementById("korisnicko_ime_poruka").style.color="red";
+      polje_korisnicko_ime.style.border = "2px groove red";
+    }
+
+    var lozinka1 = document.getElementById("lozinka1").value;
+    var polje_lozinka1 = document.getElementById("lozinka1");
+    if(lozinka1.length == 0){
+      slanje_forme = false;
+      document.getElementById("lozinka1_poruka").innerHTML = "Lozinka je obavezna";
+      document.getElementById("lozinka1_poruka").style.color="red";
+      polje_lozinka1.style.border = "2px groove red";
+    }
+
+    var lozinka2 = document.getElementById("lozinka2").value;
+    var polje_lozinka2 = document.getElementById("lozinka2");
+    if(lozinka2.length == 0 || lozinka2 !== lozinka1){
+      slanje_forme = false;
+      document.getElementById("lozinka2_poruka").innerHTML = "Lozinke moraju biti iste";
+      document.getElementById("lozinka2_poruka").style.color="red";
+      polje_lozinka2.style.border = "2px groove red";
+    }
+
+    if (!slanje_forme) {
+        event.preventDefault();
+    }
+  };
+  </script>
   <?php
     include 'connect.php';
 
@@ -65,7 +124,7 @@
       $ime = $_POST['ime'];
       $prezime = $_POST['prezime'];
       $korisnicko_ime = $_POST['korisnicko_ime'];
-      $lozinka = $_POST['lozinka'];
+      $lozinka = $_POST['lozinka1'];
       $razina = 0;
 
       $hashirana_lozinka = password_hash($lozinka, CRYPT_BLOWFISH);
